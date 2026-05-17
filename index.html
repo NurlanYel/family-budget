@@ -107,18 +107,14 @@
         content.innerHTML = `<p class="text-center text-gray-400 py-12">Пока нет транзакций</p>`;
         return;
       }
-
       let html = `<h2 class="text-xl mb-4">Все транзакции (${transactions.length})</h2>`;
       const grouped = {};
-
       transactions.forEach(t => {
         if (!grouped[t.date]) grouped[t.date] = [];
         grouped[t.date].push(t);
       });
-
       Object.keys(grouped).sort().reverse().forEach(date => {
         html += `<div class="day-header text-emerald-400">${new Date(date).toLocaleDateString('ru-RU', {weekday:'long', day:'numeric', month:'long', year:'numeric'})}</div>`;
-
         grouped[date].forEach((t, globalIndex) => {
           html += `
             <div class="bg-gray-900 rounded-3xl p-4 mb-3">
@@ -138,7 +134,6 @@
             </div>`;
         });
       });
-
       content.innerHTML = html;
     }
 
@@ -184,37 +179,23 @@
             </div>
           </div>`;
       }
-
       content.innerHTML = html;
     }
 
     function renderCategories(content) {
-      let html = `<h2 class="text-xl mb-6">Управление категориями</h2>
-        <div class="grid grid-cols-2 gap-6">`;
+      let html = `<h2 class="text-xl mb-6">Управление категориями</h2>`;
 
-      html += `<div>
-        <h3 class="text-emerald-400 mb-3">Доходы</h3>
-        <div class="space-y-2">`;
+      html += `<div class="mb-10"><h3 class="text-emerald-400 mb-4">Доходы</h3><div class="grid grid-cols-2 gap-3">`;
       incomeCategories.forEach((c, i) => {
-        html += `<div class="bg-gray-800 p-3 rounded-2xl flex justify-between items-center"><span>${c}</span><button onclick="deleteCategory('income', ${i})" class="text-red-400">✕</button></div>`;
+        html += `<div class="bg-gray-800 px-4 py-3 rounded-2xl flex justify-between items-center"><span>${c}</span><button onclick="deleteCategory('income', ${i})" class="text-red-400 text-xl">×</button></div>`;
       });
-      html += `</div>
-        <div class="flex gap-2 mt-4">
-          <input id="new-income" placeholder="Новая категория" class="flex-1 bg-gray-800 p-3 rounded-2xl">
-          <button onclick="addCategory('income')" class="bg-emerald-600 px-6 rounded-2xl text-sm">Добавить</button>
-        </div></div>`;
+      html += `</div><div class="flex gap-2 mt-4"><input id="new-income" placeholder="Новая категория" class="flex-1 bg-gray-800 p-3 rounded-2xl"><button onclick="addCategory('income')" class="bg-emerald-600 px-6 rounded-2xl">Добавить</button></div></div>`;
 
-      html += `<div>
-        <h3 class="text-red-400 mb-3">Расходы</h3>
-        <div class="space-y-2">`;
+      html += `<div><h3 class="text-red-400 mb-4">Расходы</h3><div class="grid grid-cols-2 gap-3">`;
       expenseCategories.forEach((c, i) => {
-        html += `<div class="bg-gray-800 p-3 rounded-2xl flex justify-between items-center"><span>${c}</span><button onclick="deleteCategory('expense', ${i})" class="text-red-400">✕</button></div>`;
+        html += `<div class="bg-gray-800 px-4 py-3 rounded-2xl flex justify-between items-center"><span>${c}</span><button onclick="deleteCategory('expense', ${i})" class="text-red-400 text-xl">×</button></div>`;
       });
-      html += `</div>
-        <div class="flex gap-2 mt-4">
-          <input id="new-expense" placeholder="Новая категория" class="flex-1 bg-gray-800 p-3 rounded-2xl">
-          <button onclick="addCategory('expense')" class="bg-red-600 px-6 rounded-2xl text-sm">Добавить</button>
-        </div></div>`;
+      html += `</div><div class="flex gap-2 mt-4"><input id="new-expense" placeholder="Новая категория" class="flex-1 bg-gray-800 p-3 rounded-2xl"><button onclick="addCategory('expense')" class="bg-red-600 px-6 rounded-2xl">Добавить</button></div></div>`;
 
       content.innerHTML = html;
     }
@@ -255,6 +236,7 @@
             <button onclick="saveTransaction()" class="flex-1 py-4 bg-emerald-600 rounded-2xl">Сохранить</button>
           </div>
         </div>`;
+      window.currentType = 'expense';
       updateCategorySelect('expense');
     };
 
@@ -292,7 +274,6 @@
       saveData();
       closeModal();
       showTab(1);
-      alert("✅ Сохранено!");
     };
 
     window.editTransaction = function(index) {
@@ -315,6 +296,7 @@
             <button onclick="saveTransaction()" class="flex-1 py-4 bg-emerald-600 rounded-2xl">Сохранить изменения</button>
           </div>
         </div>`;
+      window.currentType = t.type;
       updateCategorySelect(t.type);
     };
 
