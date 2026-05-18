@@ -3,9 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Семейный бюджет">
+  <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/5968/5968890.png">
+  
   <title>Семейный бюджет</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
   <style>
     body { font-family: system-ui, sans-serif; font-size: 16px; }
     .tab-active { border-bottom: 4px solid #10b981; font-weight: 700; }
@@ -340,8 +346,8 @@
             if (data.balances) balances = data.balances;
             saveData();
             showTab(1);
-            alert("✅ Данные успешно восстановлены!");
-          } catch(e) { alert("Ошибка при чтении файла"); }
+            alert("✅ Данные восстановлены!");
+          } catch(e) { alert("Ошибка файла"); }
         };
         reader.readAsText(e.target.files[0]);
       };
@@ -361,7 +367,6 @@
       saveData();
     };
 
-    // Запуск
     showTab(0);
   </script>
 </body>
