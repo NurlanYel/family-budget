@@ -113,7 +113,7 @@
       });
       Object.keys(grouped).sort().reverse().forEach(date => {
         html += `<div class="day-header text-emerald-400">${new Date(date).toLocaleDateString('ru-RU', {weekday:'long', day:'numeric', month:'long', year:'numeric'})}</div>`;
-        grouped[date].forEach((t, idx) => {
+        grouped[date].forEach(t => {
           const globalIndex = transactions.findIndex(tr => tr.id === t.id);
           html += `
             <div class="bg-gray-900 rounded-3xl p-4 mb-3">
@@ -199,10 +199,8 @@
       content.innerHTML = html;
     }
 
-    // ==================== Основные функции ====================
     window.addCategory = function(type) {
-      const id = type === 'income' ? 'new-income' : 'new-expense';
-      const input = document.getElementById(id);
+      const input = document.getElementById(type === 'income' ? 'new-income' : 'new-expense');
       if (input && input.value.trim()) {
         if (type === 'income') incomeCategories.push(input.value.trim());
         else expenseCategories.push(input.value.trim());
@@ -300,7 +298,7 @@
           </div>
         </div>`;
       window.currentType = t.type;
-      updateCategorySelect(t.type);   // ← Это важно!
+      setTimeout(() => updateCategorySelect(t.type), 10);  // ← Исправление
     };
 
     window.deleteTransaction = function(index) {
